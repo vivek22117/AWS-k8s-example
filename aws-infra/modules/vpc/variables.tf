@@ -12,7 +12,7 @@ variable "default_region" {
 }
 
 variable "cluster_name" {
-  type = string
+  type        = string
   description = "Name of EKS cluster"
 }
 
@@ -52,7 +52,7 @@ variable "db_azs_with_cidr" {
 }
 
 variable "db_subnet_gp" {
-  type = string
+  type        = string
   description = "DB subnet group name for RDS and Aurora instances"
 }
 
@@ -67,12 +67,12 @@ variable "bastion_instance_type" {
 }
 
 variable "spot_allocation_st" {
-  type = string
+  type        = string
   description = "How to allocate capacity across the Spot pools. Valid values: lowest-price, capacity-optimized."
 }
 
 variable "spot_price" {
-  type = string
+  type        = string
   description = "EC2 Spot price"
 }
 
@@ -114,6 +114,7 @@ variable "isMonitoring" {
   description = "Monitiroing is enabled or disabled for the resources creating"
 }
 
+
 #####=============ASG Standards Tags===============#####
 variable "custom_tags" {
   description = "Custom tags to set on the Instances in the ASG"
@@ -124,6 +125,7 @@ variable "custom_tags" {
     tool       = "Terraform"
     monitoring = "true"
     Name       = "Bastion-Host"
+    Project    = "DoubleDigit-Solutions"
   }
 }
 
@@ -135,4 +137,70 @@ locals {
     environment = var.environment
     monitoring  = var.isMonitoring
   }
+}
+
+#####================EKS Variables======================#####
+variable "eks_cluster_name" {
+  type        = string
+  description = "EKS cluster name"
+}
+
+variable "endpoint_private_access" {
+  type        = bool
+  description = "Amazon EKS private API server endpoint is enabled. Default is false"
+}
+
+variable "endpoint_public_access" {
+  type        = bool
+  description = "Amazon EKS public API server endpoint is enabled. Default is true"
+}
+
+variable "node_group_name" {
+  type        = string
+  description = "EKS cluster private Node Group name"
+}
+
+variable "ami_type" {
+  type        = string
+  description = "Type of Amazon Machine Image (AMI) associated with the EKS Node Group. Valid values AL2_x86_64, AL2_x86_64_GPU, AL2_ARM_64"
+}
+
+variable "disk_size" {
+  type        = number
+  description = "Disk size in GiB for worker nodes."
+}
+
+variable "instance_types" {
+  type        = list(string)
+  description = "Set of instance types associated with the EKS Node Group."
+}
+
+variable "pvt_desired_size" {
+  type        = number
+  description = "Desired number of EKS Private worker nodes."
+}
+
+variable "pvt_max_size" {
+  type        = number
+  description = "Maximum number of EKS Private worker nodes."
+}
+
+variable "pvt_min_size" {
+  type        = number
+  description = "Minimum number of EKS Private worker nodes."
+}
+
+variable "public_desired_size" {
+  type        = number
+  description = "Desired number of EKS Private worker nodes."
+}
+
+variable "public_max_size" {
+  type        = number
+  description = "Maximum number of EKS Private worker nodes."
+}
+
+variable "public_min_size" {
+  type        = number
+  description = "Minimum number of EKS Private worker nodes."
 }

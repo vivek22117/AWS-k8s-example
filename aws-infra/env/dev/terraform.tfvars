@@ -36,3 +36,18 @@ team                  = "DoubleDigitTeam"
 owner                 = "Vivek"
 bastion_instance_type = "t3.small"
 isMonitoring          = true
+
+
+eks_cluster_name = "DD-EKS"
+endpoint_private_access = false
+endpoint_public_access = true
+node_group_name = "DD-NodeGroup-11"
+ami_type = "AL2_x86_64"
+disk_size = 10
+instance_types = ["t3.medium"]
+pvt_desired_size = 1
+pvt_max_size = 1
+pvt_min_size = 1
+public_desired_size = 1
+public_max_size = 1
+public_min_size = 1

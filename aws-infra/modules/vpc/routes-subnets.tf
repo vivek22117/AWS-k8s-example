@@ -13,9 +13,9 @@ resource "aws_eip" "nat_eip" {
   count = var.enable_nat_gateway == "true" ? 1 : 0
 
   tags = {
-    Name = "eks-eip-${var.environment}-${aws_vpc.vpc.id}-${count.index}"
-    "alpha.eksctl.io/cluster-name"                =  var.cluster_name
-    "eksctl.cluster.k8s.io/v1alpha5/cluster-name" =  var.cluster_name
+    Name                                          = "eks-eip-${var.environment}-${aws_vpc.vpc.id}-${count.index}"
+    "alpha.eksctl.io/cluster-name"                = var.cluster_name
+    "eksctl.cluster.k8s.io/v1alpha5/cluster-name" = var.cluster_name
   }
 }
 
@@ -32,9 +32,9 @@ resource "aws_nat_gateway" "nat_gateway" {
   subnet_id     = aws_subnet.public.*.id[count.index]
 
   tags = {
-    Name = "eks-ng-${var.environment}-${aws_vpc.vpc.id}-${count.index + 1}"
-    "alpha.eksctl.io/cluster-name"                =  var.cluster_name
-    "eksctl.cluster.k8s.io/v1alpha5/cluster-name" =  var.cluster_name
+    Name                                          = "eks-ng-${var.environment}-${aws_vpc.vpc.id}-${count.index + 1}"
+    "alpha.eksctl.io/cluster-name"                = var.cluster_name
+    "eksctl.cluster.k8s.io/v1alpha5/cluster-name" = var.cluster_name
   }
 
 }
@@ -53,10 +53,10 @@ resource "aws_subnet" "public" {
   map_public_ip_on_launch = true
 
   tags = merge(local.common_tags, {
-    "Name"= "eks-public-${var.environment}-${element(keys(var.public_azs_with_cidr), count.index)}"
-  "alpha.eksctl.io/cluster-name" = var.cluster_name
-  "eksctl.cluster.k8s.io/v1alpha5/cluster-name" = var.cluster_name
-  "kubernetes.io/role/elb" = "1"
+    "Name"                                        = "eks-public-${var.environment}-${element(keys(var.public_azs_with_cidr), count.index)}"
+    "alpha.eksctl.io/cluster-name"                = var.cluster_name
+    "eksctl.cluster.k8s.io/v1alpha5/cluster-name" = var.cluster_name
+    "kubernetes.io/role/elb"                      = "1"
   })
 }
 
@@ -74,10 +74,10 @@ resource "aws_subnet" "private" {
   map_public_ip_on_launch = false
 
   tags = merge(local.common_tags, {
-  "Name" = "eks-private-${var.environment}-${element(keys(var.private_azs_with_cidr), count.index)}"
-  "alpha.eksctl.io/cluster-name" = var.cluster_name
-  "eksctl.cluster.k8s.io/v1alpha5/cluster-name" = var.cluster_name
-  "kubernetes.io/role/internal-elb" = "1"
+    "Name"                                        = "eks-private-${var.environment}-${element(keys(var.private_azs_with_cidr), count.index)}"
+    "alpha.eksctl.io/cluster-name"                = var.cluster_name
+    "eksctl.cluster.k8s.io/v1alpha5/cluster-name" = var.cluster_name
+    "kubernetes.io/role/internal-elb"             = "1"
   })
 }
 
@@ -89,16 +89,16 @@ resource "aws_subnet" "private" {
 resource "aws_subnet" "db_subnet" {
   count = length(var.db_azs_with_cidr)
 
-  cidr_block = values(var.db_azs_with_cidr)[count.index]
-  vpc_id = aws_vpc.vpc.id
-  availability_zone = keys(var.db_azs_with_cidr)[count.index]
+  cidr_block              = values(var.db_azs_with_cidr)[count.index]
+  vpc_id                  = aws_vpc.vpc.id
+  availability_zone       = keys(var.db_azs_with_cidr)[count.index]
   map_public_ip_on_launch = false
 
   tags = merge(local.common_tags, {
-  "Name" =  "eks-db-${var.environment}-${element(keys(var.db_azs_with_cidr), count.index)}"
-  "alpha.eksctl.io/cluster-name" = var.cluster_name
-  "eksctl.cluster.k8s.io/v1alpha5/cluster-name" = var.cluster_name
-  "kubernetes.io/role/internal-elb" = "1"
+    "Name"                                        = "eks-db-${var.environment}-${element(keys(var.db_azs_with_cidr), count.index)}"
+    "alpha.eksctl.io/cluster-name"                = var.cluster_name
+    "eksctl.cluster.k8s.io/v1alpha5/cluster-name" = var.cluster_name
+    "kubernetes.io/role/internal-elb"             = "1"
   })
 }
 
@@ -106,12 +106,12 @@ resource "aws_db_subnet_group" "database_subnet_gp" {
 
   name        = var.db_subnet_gp
   description = "Database subnet group for EKS VPC"
-  subnet_ids = aws_subnet.db_subnet.*.id
+  subnet_ids  = aws_subnet.db_subnet.*.id
 
   tags = merge(local.common_tags, {
-  "Name"= "eks-dg-subnet-gp-${var.environment}-${aws_vpc.vpc.id}"
-  "alpha.eksctl.io/cluster-name" = var.cluster_name
-  "eksctl.cluster.k8s.io/v1alpha5/cluster-name" = var.cluster_name
+    "Name"                                        = "eks-dg-subnet-gp-${var.environment}-${aws_vpc.vpc.id}"
+    "alpha.eksctl.io/cluster-name"                = var.cluster_name
+    "eksctl.cluster.k8s.io/v1alpha5/cluster-name" = var.cluster_name
   })
 }
 
@@ -127,9 +127,9 @@ resource "aws_route_table" "private" {
   count  = length(var.private_azs_with_cidr)
 
   tags = merge(local.common_tags, {
-  "Name"= "eks-private-route-${var.environment}-${aws_vpc.vpc.id}-${count.index}"
-  "alpha.eksctl.io/cluster-name" = var.cluster_name
-  "eksctl.cluster.k8s.io/v1alpha5/cluster-name" = var.cluster_name
+    "Name"                                        = "eks-private-route-${var.environment}-${aws_vpc.vpc.id}-${count.index}"
+    "alpha.eksctl.io/cluster-name"                = var.cluster_name
+    "eksctl.cluster.k8s.io/v1alpha5/cluster-name" = var.cluster_name
   })
 }
 
@@ -162,9 +162,9 @@ resource "aws_route_table" "public" {
   }
 
   tags = merge(local.common_tags, {
-  "Name" = "eks-public-route-${var.environment}-${aws_vpc.vpc.id}"
-  "alpha.eksctl.io/cluster-name" = var.cluster_name
-  "eksctl.cluster.k8s.io/v1alpha5/cluster-name" = var.cluster_name
+    "Name"                                        = "eks-public-route-${var.environment}-${aws_vpc.vpc.id}"
+    "alpha.eksctl.io/cluster-name"                = var.cluster_name
+    "eksctl.cluster.k8s.io/v1alpha5/cluster-name" = var.cluster_name
   })
 }
 
@@ -185,8 +185,8 @@ resource "aws_route_table" "db_rt" {
   count  = length(var.db_azs_with_cidr)
 
   tags = merge(local.common_tags, {
-    "Name" = "eks-db-route-${var.environment}-${aws_vpc.vpc.id}-${count.index}"
-    "alpha.eksctl.io/cluster-name" = var.cluster_name
+    "Name"                                        = "eks-db-route-${var.environment}-${aws_vpc.vpc.id}-${count.index}"
+    "alpha.eksctl.io/cluster-name"                = var.cluster_name
     "eksctl.cluster.k8s.io/v1alpha5/cluster-name" = var.cluster_name
   })
 }
