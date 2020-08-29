@@ -8,9 +8,12 @@ sudo yum install -y java-1.8.0-openjdk
 
 echo "Install AWS Cli & kubectl & eks & docker"
 sudo yum update -y
-curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
-unzip  awscli-bundle.zip
-sudo  ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+sudo yum install unzip -y
+sleep 5
+
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo  ./aws/install -i /usr/local/aws-cli -b /usr/local/bin
 
 curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.17.9/2020-08-04/bin/darwin/amd64/kubectl
 chmod +x kubectl

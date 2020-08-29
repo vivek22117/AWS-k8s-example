@@ -1,7 +1,7 @@
 {
     "variables" : {
         "region" : "us-east-1",
-        "source_ami" : "ami-0de53d8956e8dcf80"
+        "source_ami" : "ami-00a35b04ab99b549a"
     },
     "builders" : [
         {
@@ -19,7 +19,8 @@
             "tags" : {
                 "Tool" : "Packer",
                 "Author" : "Vivek",
-                "Name": "EKS-Bastion-AMI"
+                "Name": "EKS-Bastion-AMI",
+                "Project": "DoubleDigit-Solutions"
             }
         }
     ],
