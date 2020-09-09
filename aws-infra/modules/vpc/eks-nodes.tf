@@ -4,7 +4,7 @@
 resource "aws_eks_node_group" "eks_private_ng" {
   cluster_name = aws_eks_cluster.doubledigit_eks.name
 
-  node_group_name = var.node_group_name
+  node_group_name = var.pvt_node_group_name
   node_role_arn   = aws_iam_role.dd_eks_nodes_role.arn
   subnet_ids      = aws_subnet.private.*.id
   ami_type        = var.ami_type
@@ -37,7 +37,7 @@ resource "aws_eks_node_group" "eks_private_ng" {
 resource "aws_eks_node_group" "eks_public_ng" {
   cluster_name = aws_eks_cluster.doubledigit_eks.name
 
-  node_group_name = var.node_group_name
+  node_group_name = var.pub_node_group_name
   node_role_arn   = aws_iam_role.dd_eks_nodes_role.arn
   subnet_ids      = aws_subnet.public.*.id
   ami_type        = var.ami_type
@@ -48,6 +48,15 @@ resource "aws_eks_node_group" "eks_public_ng" {
     desired_size = var.public_desired_size
     max_size     = var.public_max_size
     min_size     = var.public_min_size
+  }
+
+  labels = {
+    lifecycle = "OnDemand"
+    az        = "eu-west-1a"
+  }
+
+  lifecycle {
+    create_before_destroy = true
   }
 
   tags = merge(local.common_tags, {

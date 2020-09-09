@@ -1,0 +1,53 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: dd-eks-cluster
+  region: us-east-1
+
+vpc:
+  id: "vpc-0dd338ecf29863c55"  # (optional, must match VPC ID used for each subnet below)
+  subnets:
+    # must provide 'private' and/or 'public' subnets by availibility zone as shown
+    private:
+      eu-north-1a:
+        id: "subnet-0b2512f8c6ae9bf30"
+      eu-north-1b:
+        id: "subnet-08cb9a2ed60394ce3"
+      eu-north-1c:
+        id: "subnet-00f71956cdec8f1dc"
+
+nodeGroups:
+  - name: dd-spot-ng
+    privateNetworking: true
+    minSize: 2
+    maxSize: 5
+    desiredCapacity: 1
+    labels:
+      nodegroup-type: frontend-workloads
+    instancesDistribution:
+      maxPrice: 0.017
+      instanceTypes: ["m5.large", "m5d.large", "m4.large","t3.large","t3a.large","m5a.large","t2.large"]
+      onDemandBaseCapacity: 0
+      onDemandPercentageAboveBaseCapacity: 50
+      spotAllocationStrategy: "capacity-optimized"
+#      spotInstancePools: 2    #spotInstancePools field shouldn't be set when using the spotAllocationStrategy field
+    iam:
+      withAddonPolicies:
+        autoScaler: true
+        cloudWatch: true
+        albIngress: true
+  - name: dd-on-demand-ng
+    privateNetworking: true
+    minSize: 0
+    maxSize: 2
+    desiredCapacity: 0
+    instancesDistribution:
+      instanceTypes: ["m5.large", "m5d.large", "m4.large","t3.large","t3a.large","m5a.large","t2.large"]
+      onDemandBaseCapacity: 0
+      onDemandPercentageAboveBaseCapacity: 100
+    iam:
+      withAddonPolicies:
+        autoScaler: true
+        cloudWatch: true
+        albIngress: true
