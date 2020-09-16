@@ -8,7 +8,7 @@ sudo yum install -y java-1.8.0-openjdk
 
 echo "Install AWS Cli & kubectl & eks & docker"
 sudo yum update -y
-sudo yum install unzip -y
+sudo yum install wget unzip -y
 sleep 5
 
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
