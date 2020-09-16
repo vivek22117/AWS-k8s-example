@@ -8,9 +8,7 @@ module "eks-vpc-dev" {
   environment    = var.environment
   default_region = var.default_region
 
-  cluster_name = var.cluster_name
   db_subnet_gp = var.db_subnet_gp
-
   cidr_block            = var.cidr_block
   private_azs_with_cidr = var.private_azs_with_cidr
   public_azs_with_cidr  = var.public_azs_with_cidr
@@ -28,10 +26,12 @@ module "eks-vpc-dev" {
   spot_allocation_st    = var.spot_allocation_st
   spot_price            = var.spot_price
 
+  cluster_name = var.cluster_name
   eks_cluster_name = var.eks_cluster_name
   endpoint_private_access = var.endpoint_private_access
   endpoint_public_access = var.endpoint_public_access
-  node_group_name = var.node_group_name
+  pvt_node_group_name = var.pvt_node_group_name
+  pub_node_group_name = var.pub_node_group_name
   ami_type = var.ami_type
   disk_size = var.disk_size
   instance_types = var.instance_types

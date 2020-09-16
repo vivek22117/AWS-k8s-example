@@ -124,6 +124,7 @@ variable "custom_tags" {
     tool       = "Terraform"
     monitoring = "true"
     Name       = "Bastion-Host"
+    Project    = "DoubleDigit-Solutions"
   }
 }
 
@@ -153,9 +154,14 @@ variable "endpoint_public_access" {
   description = "Amazon EKS public API server endpoint is enabled. Default is true"
 }
 
-variable "node_group_name" {
+variable "pvt_node_group_name" {
   type        = string
   description = "EKS cluster private Node Group name"
+}
+
+variable "pub_node_group_name" {
+  type        = string
+  description = "EKS cluster public Node Group name"
 }
 
 variable "ami_type" {

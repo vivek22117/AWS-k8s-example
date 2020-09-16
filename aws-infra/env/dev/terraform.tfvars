@@ -37,11 +37,12 @@ owner                 = "Vivek"
 bastion_instance_type = "t3.small"
 isMonitoring          = true
 
-
+cluster_name = "DD-EKS"
 eks_cluster_name = "DD-EKS"
 endpoint_private_access = false
 endpoint_public_access = true
-node_group_name = "DD-NodeGroup-11"
+pvt_node_group_name = "Private-DD-NodeGroup-11"
+pub_node_group_name = "Public-DD-NodeGroup-11"
 ami_type = "AL2_x86_64"
 disk_size = 10
 instance_types = ["t3.medium"]
