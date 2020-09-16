@@ -24,7 +24,7 @@ terraform {
   }
 
   backend "s3" {
-    profile = "qa-admin"
+    profile = "admin"
     region  = "us-east-1"
     encrypt = "true"
   }
