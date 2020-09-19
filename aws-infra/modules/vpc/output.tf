@@ -50,6 +50,15 @@ output "vpc_main_rt" {
   value = aws_route_table.vpc_main_rt.id
 }
 
+output "eks_cluster_id" {
+  description = "The name of the cluster"
+  value       = aws_eks_cluster.doubledigit_eks.id
+}
+
+output "eks_cluster_arn" {
+  description = "The Amazon Resource Name (ARN) of the cluster"
+  value       = aws_eks_cluster.doubledigit_eks.arn
+}
 
 output "eks_cluster_endpoint" {
   value = aws_eks_cluster.doubledigit_eks.endpoint
