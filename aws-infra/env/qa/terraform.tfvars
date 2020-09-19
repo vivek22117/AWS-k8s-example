@@ -36,6 +36,7 @@ owner                 = "Vivek"
 bastion_instance_type = "t3.small"
 isMonitoring          = true
 
+cluster_version = "1.17"
 cluster_name            = "DD-EKS"
 eks_cluster_name        = "DD-EKS"
 endpoint_private_access = false
@@ -51,3 +52,6 @@ pvt_min_size            = 1
 public_desired_size     = 1
 public_max_size         = 1
 public_min_size         = 1
+
+log_retention = 3
+enabled_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"]

@@ -50,3 +50,11 @@ output "vpc_main_rt" {
   value = aws_route_table.vpc_main_rt.id
 }
 
+
+output "eks_cluster_endpoint" {
+  value = aws_eks_cluster.doubledigit_eks.endpoint
+}
+
+output "eks_cluster_certificate_authority" {
+  value = aws_eks_cluster.doubledigit_eks.certificate_authority
+}

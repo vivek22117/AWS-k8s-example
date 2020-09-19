@@ -56,6 +56,7 @@ resource "aws_subnet" "public" {
     "Name"                                        = "eks-public-${var.environment}-${element(keys(var.public_azs_with_cidr), count.index)}"
     "alpha.eksctl.io/cluster-name"                = var.cluster_name
     "eksctl.cluster.k8s.io/v1alpha5/cluster-name" = var.cluster_name
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
     "kubernetes.io/role/elb"                      = "1"
   })
 }
@@ -77,6 +78,7 @@ resource "aws_subnet" "private" {
     "Name"                                        = "eks-private-${var.environment}-${element(keys(var.private_azs_with_cidr), count.index)}"
     "alpha.eksctl.io/cluster-name"                = var.cluster_name
     "eksctl.cluster.k8s.io/v1alpha5/cluster-name" = var.cluster_name
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
     "kubernetes.io/role/internal-elb"             = "1"
   })
 }
@@ -98,6 +100,7 @@ resource "aws_subnet" "db_subnet" {
     "Name"                                        = "eks-db-${var.environment}-${element(keys(var.db_azs_with_cidr), count.index)}"
     "alpha.eksctl.io/cluster-name"                = var.cluster_name
     "eksctl.cluster.k8s.io/v1alpha5/cluster-name" = var.cluster_name
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
     "kubernetes.io/role/internal-elb"             = "1"
   })
 }
