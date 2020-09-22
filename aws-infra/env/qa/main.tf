@@ -27,6 +27,8 @@ module "eks-vpc-dev" {
   spot_price            = var.spot_price
 
   cluster_name            = var.cluster_name
+  cluster_version = var.cluster_version
+
   eks_cluster_name        = var.eks_cluster_name
   endpoint_private_access = var.endpoint_private_access
   endpoint_public_access  = var.endpoint_public_access
@@ -41,4 +43,8 @@ module "eks-vpc-dev" {
   public_desired_size     = var.public_desired_size
   public_max_size         = var.public_max_size
   public_min_size         = var.public_max_size
+  log_retention = var.log_retention
+  enabled_log_types = var.enabled_log_types
+
+
 }
