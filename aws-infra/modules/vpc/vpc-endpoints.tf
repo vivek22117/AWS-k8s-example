@@ -2,7 +2,7 @@
 #                  S3 Endpoint                  #
 #################################################
 resource "aws_vpc_endpoint" "s3_endpoint" {
-  vpc_id            = aws_vpc.vpc.id                 //Interpolation syntax
+  vpc_id            = aws_vpc.vpc.id //Interpolation syntax
   service_name      = "com.amazonaws.${var.default_region}.s3"
   vpc_endpoint_type = "Gateway"
   route_table_ids   = flatten([aws_route_table.private.*.id])
@@ -91,12 +91,12 @@ resource "aws_vpc_endpoint" "private_link_cw_logs" {
 #              AWS EC2 VPC Endpoint             #
 #################################################
 resource "aws_vpc_endpoint" "ec2" {
-  vpc_id       = aws_vpc.vpc.id
-  service_name = "com.amazonaws.${var.default_region}.ec2"
-  vpc_endpoint_type = "Interface"
+  vpc_id              = aws_vpc.vpc.id
+  service_name        = "com.amazonaws.${var.default_region}.ec2"
+  vpc_endpoint_type   = "Interface"
   private_dns_enabled = true
   subnet_ids          = flatten([aws_subnet.private.*.id])
-  security_group_ids = [aws_security_group.vpce.id]
+  security_group_ids  = [aws_security_group.vpce.id]
 
   tags = merge(local.common_tags, map("Name", "${var.environment}-EC2-endpoint"))
 }

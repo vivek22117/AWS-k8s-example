@@ -211,16 +211,16 @@ variable "public_min_size" {
 }
 
 variable "log_retention" {
-  type = number
+  type        = number
   description = "Number of days to store EKS logs"
 }
 
 variable "enabled_log_types" {
-  type = list(string)
+  type        = list(string)
   description = "Amazon EKS control plane logging provides audit and diagnostic logs directly from the Amazon EKS control plane to CloudWatch Logs"
 }
 
 variable "cluster_version" {
-  type = string
+  type        = string
   description = "Desired Kubernetes master version."
 }

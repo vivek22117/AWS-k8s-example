@@ -1,7 +1,7 @@
 resource "aws_cloudwatch_log_group" "dd_eks_lg" {
   name              = "/aws/eks/${var.cluster_name}/cluster"
   retention_in_days = var.log_retention
-  tags = merge(local.common_tags, map("Name", "${var.environment}-eks-lg"))
+  tags              = merge(local.common_tags, map("Name", "${var.environment}-eks-lg"))
 }
 
 
@@ -9,8 +9,8 @@ resource "aws_cloudwatch_log_group" "dd_eks_lg" {
 #              EKS Cluster                #
 ###########################################
 resource "aws_eks_cluster" "doubledigit_eks" {
-  name     = var.eks_cluster_name
-  role_arn = aws_iam_role.eks_cluster_iam.arn
+  name                      = var.eks_cluster_name
+  role_arn                  = aws_iam_role.eks_cluster_iam.arn
   enabled_cluster_log_types = var.enabled_log_types
   version                   = var.cluster_version
 
