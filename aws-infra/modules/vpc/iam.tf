@@ -124,6 +124,11 @@ resource "aws_iam_role_policy_attachment" "aws_eks_service_policy" {
   role       = aws_iam_role.eks_cluster_iam.name
 }
 
+resource "aws_iam_role_policy_attachment" "aws_eks_vpc_resource_controller_policy" {
+  policy_arn = "arn:aws:iam::aws:policy/AAmazonEKSVPCResourceController"
+  role       = aws_iam_role.eks_cluster_iam.name
+}
+
 
 #################################################
 #       EKS Cluster Nodes IAM Role              #

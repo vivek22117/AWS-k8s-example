@@ -69,6 +69,16 @@ resource "aws_security_group_rule" "eks_cluster_outbound" {
   source_security_group_id = aws_security_group.eks_nodes_sg.id
 }
 
+resource "aws_security_group_rule" "eks_cluster_outbound_internet" {
+  type                     = "egress"
+  description              = "Allow cluster egress access to internet"
+  from_port                = 0
+  to_port                  = 0
+  protocol                 = "-1"
+  security_group_id        = aws_security_group.eks_cluster.id
+  cidr_blocks = ["0.0.0.0/0"]
+}
+
 
 #################################################
 #       EKS Cluster Nodes Security Group        #

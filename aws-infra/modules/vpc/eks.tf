@@ -14,6 +14,8 @@ resource "aws_eks_cluster" "doubledigit_eks" {
   enabled_cluster_log_types = var.enabled_log_types
   version                   = var.cluster_version
 
+  tags = local.common_tags
+
   vpc_config {
     security_group_ids      = [aws_security_group.eks_cluster.id, aws_security_group.eks_nodes_sg.id]
     endpoint_private_access = var.endpoint_private_access
