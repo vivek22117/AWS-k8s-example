@@ -130,6 +130,31 @@ resource "aws_iam_role_policy_attachment" "aws_eks_vpc_resource_controller_polic
 }
 
 
+resource "aws_iam_policy" "cluster_elb_sl_policy" {
+  name        = "EKSClusterELBServiceLinkedPolicy"
+  description = "required to create AWSServiceRoleForElasticLoadBalancing service-linked role by EKS during ELB provisioning"
+  policy      = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+              "ec2:DescribeAccountAttributes",
+              "ec2:DescribeInternetGateways"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "cluster_elb_sl_role_attach" {
+  policy_arn = aws_iam_policy.cluster_elb_sl_policy.arn
+  role       = aws_iam_role.eks_cluster_iam.name
+}
+
 #################################################
 #       EKS Cluster Nodes IAM Role              #
 #################################################

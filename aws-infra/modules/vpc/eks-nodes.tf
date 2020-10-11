@@ -23,7 +23,7 @@ resource "aws_eks_node_group" "eks_private_ng" {
 
   lifecycle {
     create_before_destroy = true
-    ignore_changes        = [scaling_config[0].desired_size]
+    ignore_changes        = [scaling_config.0.desired_size]
   }
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
