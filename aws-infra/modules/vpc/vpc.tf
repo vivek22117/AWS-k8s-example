@@ -9,10 +9,8 @@ resource "aws_vpc" "vpc" {
 
 
   tags = merge(local.common_tags, {
-    "Name"                                        = "eks-vpc-${var.environment}-${var.cidr_block}"
-    "kubernetes.io/cluster/${var.cluster_name}"   = "shared"
-    "alpha.eksctl.io/cluster-name"                = var.cluster_name
-    "eksctl.cluster.k8s.io/v1alpha5/cluster-name" = var.cluster_name
+    Name                                        = "eks-vpc-${var.environment}-${var.cidr_block}"
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
   })
 }
 
@@ -24,9 +22,7 @@ resource "aws_internet_gateway" "vpc_igw" {
   vpc_id = aws_vpc.vpc.id
 
   tags = merge(local.common_tags, {
-    "Name"                                        = "eks-igw-${var.environment}"
-    "alpha.eksctl.io/cluster-name"                = var.cluster_name
-    "eksctl.cluster.k8s.io/v1alpha5/cluster-name" = var.cluster_name
+    Name = "eks-igw-${var.environment}"
   })
 }
 
@@ -41,9 +37,7 @@ resource "aws_internet_gateway" "vpc_igw" {
 resource "aws_route_table" "vpc_main_rt" {
   vpc_id = aws_vpc.vpc.id
   tags = merge(local.common_tags, {
-    "Name"                                        = "eks-vpc-${var.environment}-main-rt"
-    "alpha.eksctl.io/cluster-name"                = var.cluster_name
-    "eksctl.cluster.k8s.io/v1alpha5/cluster-name" = var.cluster_name
+    Name = "eks-vpc-${var.environment}-main-rt"
   })
 }
 

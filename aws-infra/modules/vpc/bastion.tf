@@ -3,7 +3,7 @@
 ########################################################
 resource "aws_key_pair" "bastion_key" {
   public_key = var.public_key
-  key_name   = "bastion-key"
+  key_name   = "bastion-eks-key"
 }
 
 
@@ -23,11 +23,16 @@ resource "aws_launch_template" "eks_bastion_lt" {
   block_device_mappings {
     device_name = "/dev/xvda"
     ebs {
-      volume_size = 10
+      volume_size = 30
     }
   }
   lifecycle {
     create_before_destroy = true
+  }
+
+  tag_specifications {
+    resource_type = "instance"
+    tags          = merge(local.common_tags, map("Project", "DoubleDigit-Solutions"))
   }
 }
 

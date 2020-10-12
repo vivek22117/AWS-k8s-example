@@ -9,7 +9,7 @@ enable_nat_gateway = true
 db_subnet_gp       = "eks-dbsubnet-group"
 
 spot_allocation_st = "lowest-price"
-spot_price         = "0.007200"
+spot_price         = "0.007600"
 
 
 private_azs_with_cidr = {

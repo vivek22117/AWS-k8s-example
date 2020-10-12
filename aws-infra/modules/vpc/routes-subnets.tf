@@ -13,9 +13,7 @@ resource "aws_eip" "nat_eip" {
   count = var.enable_nat_gateway == "true" ? 1 : 0
 
   tags = {
-    Name                                          = "eks-eip-${var.environment}-${aws_vpc.vpc.id}-${count.index}"
-    "alpha.eksctl.io/cluster-name"                = var.cluster_name
-    "eksctl.cluster.k8s.io/v1alpha5/cluster-name" = var.cluster_name
+    Name = "eks-eip-${var.environment}-${aws_vpc.vpc.id}-${count.index}"
   }
 }
 
@@ -32,9 +30,7 @@ resource "aws_nat_gateway" "nat_gateway" {
   subnet_id     = aws_subnet.public.*.id[count.index]
 
   tags = {
-    Name                                          = "eks-ng-${var.environment}-${aws_vpc.vpc.id}-${count.index + 1}"
-    "alpha.eksctl.io/cluster-name"                = var.cluster_name
-    "eksctl.cluster.k8s.io/v1alpha5/cluster-name" = var.cluster_name
+    Name = "eks-ng-${var.environment}-${aws_vpc.vpc.id}-${count.index + 1}"
   }
 
 }
@@ -53,11 +49,9 @@ resource "aws_subnet" "public" {
   map_public_ip_on_launch = true
 
   tags = merge(local.common_tags, {
-    "Name"                                        = "eks-public-${var.environment}-${element(keys(var.public_azs_with_cidr), count.index)}"
-    "alpha.eksctl.io/cluster-name"                = var.cluster_name
-    "eksctl.cluster.k8s.io/v1alpha5/cluster-name" = var.cluster_name
-    "kubernetes.io/cluster/${var.cluster_name}"   = "shared"
-    "kubernetes.io/role/elb"                      = "1"
+    Name                                        = "eks-public-${var.environment}-${element(keys(var.public_azs_with_cidr), count.index)}"
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
+    "kubernetes.io/role/elb"                    = "1"
   })
 }
 
@@ -75,11 +69,9 @@ resource "aws_subnet" "private" {
   map_public_ip_on_launch = false
 
   tags = merge(local.common_tags, {
-    "Name"                                        = "eks-private-${var.environment}-${element(keys(var.private_azs_with_cidr), count.index)}"
-    "alpha.eksctl.io/cluster-name"                = var.cluster_name
-    "eksctl.cluster.k8s.io/v1alpha5/cluster-name" = var.cluster_name
-    "kubernetes.io/cluster/${var.cluster_name}"   = "shared"
-    "kubernetes.io/role/internal-elb"             = "1"
+    Name                                        = "eks-private-${var.environment}-${element(keys(var.private_azs_with_cidr), count.index)}"
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
+    "kubernetes.io/role/internal-elb"           = "1"
   })
 }
 
@@ -97,11 +89,7 @@ resource "aws_subnet" "db_subnet" {
   map_public_ip_on_launch = false
 
   tags = merge(local.common_tags, {
-    "Name"                                        = "eks-db-${var.environment}-${element(keys(var.db_azs_with_cidr), count.index)}"
-    "alpha.eksctl.io/cluster-name"                = var.cluster_name
-    "eksctl.cluster.k8s.io/v1alpha5/cluster-name" = var.cluster_name
-    "kubernetes.io/cluster/${var.cluster_name}"   = "shared"
-    "kubernetes.io/role/internal-elb"             = "1"
+    "Name" = "eks-db-${var.environment}-${element(keys(var.db_azs_with_cidr), count.index)}"
   })
 }
 
@@ -112,9 +100,7 @@ resource "aws_db_subnet_group" "database_subnet_gp" {
   subnet_ids  = aws_subnet.db_subnet.*.id
 
   tags = merge(local.common_tags, {
-    "Name"                                        = "eks-dg-subnet-gp-${var.environment}-${aws_vpc.vpc.id}"
-    "alpha.eksctl.io/cluster-name"                = var.cluster_name
-    "eksctl.cluster.k8s.io/v1alpha5/cluster-name" = var.cluster_name
+    "Name" = "eks-dg-subnet-gp-${var.environment}-${aws_vpc.vpc.id}"
   })
 }
 
