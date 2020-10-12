@@ -96,7 +96,7 @@ variable "public_key" {
 ######################################################
 variable "team" {
   type        = string
-  description = "Owner team for this applcation infrastructure"
+  description = "Owner team for this application infrastructure"
 }
 
 variable "owner" {
@@ -111,7 +111,7 @@ variable "environment" {
 
 variable "isMonitoring" {
   type        = bool
-  description = "Monitiroing is enabled or disabled for the resources creating"
+  description = "Monitoring is enabled or disabled for the resources creating"
 }
 
 #####=============ASG Standards Tags===============#####
@@ -135,6 +135,7 @@ locals {
     team        = var.team
     environment = var.environment
     monitoring  = var.isMonitoring
+    Project     = "DoubleDigit-Solutions"
   }
 }
 

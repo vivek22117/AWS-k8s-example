@@ -136,6 +136,7 @@ locals {
     team        = var.team
     environment = var.environment
     monitoring  = var.isMonitoring
+    Project     = "DoubleDigit-Solutions"
   }
 }
 
