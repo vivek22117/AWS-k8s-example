@@ -15,8 +15,8 @@ curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip
 unzip awscliv2.zip
 sudo  ./aws/install -i /usr/local/aws-cli -b /usr/local/bin
 
-curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.17.9/2020-08-04/bin/darwin/amd64/kubectl
-chmod +x kubectl
+curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.17.9/2020-08-04/bin/linux/amd64/kubectl
+chmod +x ./kubectl
 mv kubectl /usr/local/bin/kubectl
 
 
