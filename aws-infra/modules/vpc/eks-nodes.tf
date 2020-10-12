@@ -6,7 +6,7 @@ resource "aws_eks_node_group" "eks_private_ng" {
 
   node_group_name = var.pvt_node_group_name
   node_role_arn   = aws_iam_role.dd_eks_nodes_role.arn
-  subnet_ids      = aws_subnet.private.*.id
+  subnet_ids      = aws_subnet.private[*].id
   ami_type        = var.ami_type
   disk_size       = var.disk_size
   instance_types  = var.instance_types
@@ -18,7 +18,7 @@ resource "aws_eks_node_group" "eks_private_ng" {
   }
 
   tags = merge(local.common_tags, {
-    "Name" = "eks-pvt-node-gp-${var.environment}}"
+    Name = "private-${var.environment}}"
   })
 
   lifecycle {
@@ -44,7 +44,7 @@ resource "aws_eks_node_group" "eks_public_ng" {
 
   node_group_name = var.pub_node_group_name
   node_role_arn   = aws_iam_role.dd_eks_nodes_role.arn
-  subnet_ids      = aws_subnet.public.*.id
+  subnet_ids      = aws_subnet.public[*].id
   ami_type        = var.ami_type
   disk_size       = var.disk_size
   instance_types  = var.instance_types
@@ -55,17 +55,18 @@ resource "aws_eks_node_group" "eks_public_ng" {
     min_size     = var.public_min_size
   }
 
-  labels = {
-    lifecycle = "OnDemand"
-    az        = "eu-west-1a"
-  }
+  //  labels = {
+  //    lifecycle = "OnDemand"
+  //    az        = "us-east-1a"
+  //  }
 
   lifecycle {
     create_before_destroy = true
+    ignore_changes        = [scaling_config.0.desired_size]
   }
 
   tags = merge(local.common_tags, {
-    "Name" = "eks-public-node-gp-${var.environment}}"
+    Name = "public-${var.environment}}"
   })
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
