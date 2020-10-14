@@ -72,6 +72,21 @@ resource "aws_iam_policy" "bastion_host_policy" {
                 "ec2messages:SendReply"
             ],
             "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "eks:*"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "NavigateInConsole",
+            "Effect": "Allow",
+            "Action": [
+                "iam:*"
+            ],
+            "Resource": "*"
         }
     ]
 }

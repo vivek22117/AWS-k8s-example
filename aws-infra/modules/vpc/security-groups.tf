@@ -59,6 +59,17 @@ resource "aws_security_group_rule" "eks_cluster_inbound" {
   security_group_id        = aws_security_group.eks_cluster.id
   source_security_group_id = aws_security_group.eks_nodes_sg.id
 }
+
+resource "aws_security_group_rule" "eks_cluster_inbound_bastion" {
+  type                     = "ingress"
+  description              = "Allow Bastion Host to communicate with the cluster API Server"
+  from_port                = 443
+  to_port                  = 443
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.eks_cluster.id
+  source_security_group_id = aws_security_group.bastion_host_sg.id
+}
+
 resource "aws_security_group_rule" "eks_cluster_outbound" {
   type                     = "egress"
   description              = "Allow cluster API Server to communicate with the worker nodes"
