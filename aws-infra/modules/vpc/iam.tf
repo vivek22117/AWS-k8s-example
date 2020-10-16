@@ -144,7 +144,6 @@ resource "aws_iam_role_policy_attachment" "aws_eks_vpc_resource_controller_polic
   role       = aws_iam_role.eks_cluster_iam.name
 }
 
-
 resource "aws_iam_policy" "cluster_elb_sl_policy" {
   name        = "EKSClusterELBServiceLinkedPolicy"
   description = "required to create AWSServiceRoleForElasticLoadBalancing service-linked role by EKS during ELB provisioning"
