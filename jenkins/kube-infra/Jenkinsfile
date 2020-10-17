@@ -5,7 +5,7 @@ pipeline {
 
     options {
         preserveStashes(buildCount: 5)
-        timeout(time: 5, unit: 'MINUTES')
+        timeout(time: 22, unit: 'MINUTES')
         skipStagesAfterUnstable()
     }
     parameters {
@@ -39,12 +39,10 @@ pipeline {
             steps {
                 dir('aws-infra/env/qa/') {
                     script {
-                        timeout(22) {
                             input message: 'Destroy Plan?', ok: 'Destroy'
                             sh "echo destroying the AWS infra....."
                             sh "terraform destroy -var 'environment=${ENVIRONMENT}' \
                                 -var-file='${ENVIRONMENT}.tfvars' -auto-approve"
-                        }
                     }
                 }
             }
@@ -76,7 +74,6 @@ pipeline {
             steps {
                 dir('aws-infra/env/qa/') {
                     script {
-                        timeout(22) {
                             def apply = false
                             try {
                                 input message: 'confirm apply', ok: 'Apply config'
@@ -89,7 +86,6 @@ pipeline {
                                 sh "echo creating AWS infra....."
                                 unstash "kube-infra-plan"
                                 sh "terraform apply -auto-approve kube-infra.tfplan"
-                            }
                         }
                     }
                 }
