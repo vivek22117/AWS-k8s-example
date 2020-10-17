@@ -5,7 +5,7 @@ import javaposse.jobdsl.dsl.JobParent
 
 
 def factory = this as JobParent
-def listOfEnvironment = ["eks-dev", "eks-qa", "eks-prod"]
+def listOfEnvironment = ["dev", "qa", "prod"]
 def component = "kube-infra-job"
 
 def emailId = "vivekmishra22117@gmail.com"

@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'eks'
+        label 'qa'
     }
 
     options {
