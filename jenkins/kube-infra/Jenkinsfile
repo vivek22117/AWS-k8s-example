@@ -1,6 +1,7 @@
 pipeline {
     agent {
         label 'qa'
+        timeout
     }
 
     options {
@@ -39,10 +40,12 @@ pipeline {
             steps {
                 dir('aws-infra/env/qa/') {
                     script {
-                        input message: 'Destroy Plan?', ok: 'Destroy'
-                        sh "echo destroying the AWS infra....."
-                        sh "terraform destroy -var 'environment=${ENVIRONMENT}' \
-                            -var-file='${ENVIRONMENT}.tfvars' -auto-approve"
+                        timeout(time: 20, unit: MINUTES) {
+                            input message: 'Destroy Plan?', ok: 'Destroy'
+                            sh "echo destroying the AWS infra....."
+                            sh "terraform destroy -var 'environment=${ENVIRONMENT}' \
+                                -var-file='${ENVIRONMENT}.tfvars' -auto-approve"
+                        }
                     }
                 }
             }
