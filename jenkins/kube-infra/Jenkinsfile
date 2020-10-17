@@ -39,7 +39,7 @@ pipeline {
             steps {
                 dir('aws-infra/env/qa/') {
                     script {
-                        timeout(time: 20, unit: 'MINUTES') {
+                        timeout(22) {
                             input message: 'Destroy Plan?', ok: 'Destroy'
                             sh "echo destroying the AWS infra....."
                             sh "terraform destroy -var 'environment=${ENVIRONMENT}' \
@@ -76,7 +76,7 @@ pipeline {
             steps {
                 dir('aws-infra/env/qa/') {
                     script {
-                        timeout(time: 20, unit: 'MINUTES') {
+                        timeout(22) {
                             def apply = false
                             try {
                                 input message: 'confirm apply', ok: 'Apply config'
