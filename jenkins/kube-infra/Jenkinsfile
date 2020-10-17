@@ -71,24 +71,23 @@ pipeline {
                     "${params.AWS_INFRA_ACTION}" == "create"
                 }
             }
-            options {
-                timeout(time: 1, unit: 'HOURS')
-            }
             steps {
                 dir('aws-infra/env/qa/') {
                     script {
-                        def apply = false
-                        try {
-                            input message: 'confirm apply', ok: 'Apply config'
-                            apply = true;
-                        } catch (err) {
-                            apply = false
-                            sh "echo skipping the AWS infra creation....."
-                        }
-                        if (apply) {
-                            sh "echo creating AWS infra....."
-                            unstash "kube-infra-plan"
-                            sh "terraform apply -auto-approve kube-infra.tfplan"
+                        timeout(time: 20, unit: MINUTES) {
+                            def apply = false
+                            try {
+                                input message: 'confirm apply', ok: 'Apply config'
+                                apply = true;
+                            } catch (err) {
+                                apply = false
+                                sh "echo skipping the AWS infra creation....."
+                            }
+                            if (apply) {
+                                sh "echo creating AWS infra....."
+                                unstash "kube-infra-plan"
+                                sh "terraform apply -auto-approve kube-infra.tfplan"
+                            }
                         }
                     }
                 }
