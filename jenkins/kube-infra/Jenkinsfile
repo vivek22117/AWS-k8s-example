@@ -71,6 +71,9 @@ pipeline {
                     "${params.AWS_INFRA_ACTION}" == "create"
                 }
             }
+            options {
+                timeout(time: 1, unit: 'HOURS')
+            }
             steps {
                 dir('aws-infra/env/qa/') {
                     script {
