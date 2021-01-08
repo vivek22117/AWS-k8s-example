@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dd-nginx
+  labels:
+    app: dd-nginx
+spec:
+  replicas: 4
+  minReadySeconds: 10
+  selector:
+    matchLabels:
+      app: dd-nginx
+  template:
+    metadata:
+      labels:
+        app: dd-nginx
+    spec:
+      containers:
+      - name: dd-nginx
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            memory: "128Mi"  # 128MB
+            cpu: "200m"  # 200 millicpu (.2 cpu or 20% of the cpu)
+
