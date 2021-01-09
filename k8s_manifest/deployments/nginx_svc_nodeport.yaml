@@ -11,13 +11,13 @@ spec:
     metadata:
       labels:
         app: nginx-two
-     spec:
-        containers:
-          - name: nginx-two
-            image: nginx:1.17-alpine
-            ports:
-            - containerPort: 80
-              name: nginx-pod-port
+    spec:
+      containers:
+      - name: nginx-two
+        image: nginx:1.17-alpine
+        ports:
+        - containerPort: 80
+          name: nginx-pod-port
 ---
 apiVersion: v1
 kind: Service
