@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: myapp-rs
+  labels:
+    app: myapp
+    env: dev
+spec:
+  selector:
+    matchLabels:
+      env: dev
+      app: myapp
+  replicas: 3
+  tempalte:
+    metadata:
+      name: myapp-pod
+      lables:
+        env: dev
+        app: myapp
+    containers:
+      - name: nginx-container
+        image: nginx
