@@ -1,3 +1,6 @@
+## DELETE POD FAST
+kubectl delete pod nginx --grace-period=0 --force
+
 # Path a SVC with different port
 
 kubectl patch service nginx-one --type='json' \
@@ -33,7 +36,7 @@ kubectl run redis --image=redis:alpine -l="tier=db,env=dev"
 kubectl expose po redis --name=redis-service --port=6379
 
 ## CREATE DEPLOYMENT & SCALE TO 3
-kubeclt create deployment webapp --image=nginx
+kubectl create deployment webapp --image=nginx
 
 kubectl scale deploy webapp --replicas=3
 
@@ -48,4 +51,9 @@ kubectl scale deploy redis-deploy --replicas=2 -n dev-ns
 ##CREATE POD httpd & EXPOSE USING SERVICE TYPE ClusterIP 80
 kubectl run httpd --image=httpd:alpine
 kubectl expose po httpd --name=httpd --type=ClusterIP --port=80
+
+## USE SET PASTE IN VI EDITOR
+:set paste
+
+
 
