@@ -25,3 +25,27 @@ kubectl config set-context $(kubectl config current-context) --namespace=dev
 
 ## COUNT NUMBER OF NS
 kubectl get ns --no-headers | wc -l
+
+kubectl get po --all-namespaces | grep blue
+kubectl run redis --image=redis:alpine -l="tier=db,env=dev"
+
+## EXPOSE POD
+kubectl expose po redis --name=redis-service --port=6379
+
+## CREATE DEPLOYMENT & SCALE TO 3
+kubeclt create deployment webapp --image=nginx
+
+kubectl scale deploy webapp --replicas=3
+
+
+#CREATE POD AND EXPOSE TO CONTAINER PORT 8080
+kubectl run custom-nginx --image=nginx --port=8080
+
+## CREATE DEPLOYMENT & SCALE IN DIFF NS
+kubectl create deploy redis-deploy --image=redis -n dev-ns
+kubectl scale deploy redis-deploy --replicas=2 -n dev-ns
+
+##CREATE POD httpd & EXPOSE USING SERVICE TYPE ClusterIP 80
+kubectl run httpd --image=httpd:alpine
+kubectl expose po httpd --name=httpd --type=ClusterIP --port=80
+
