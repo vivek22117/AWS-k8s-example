@@ -1,0 +1,27 @@
+# Path a SVC with different port
+
+kubectl patch service nginx-one --type='json' \
+--patch='[{"op": "replace", "path": "/spec/ports/0/nodePort", "value":31111}]
+
+
+When Pods run the output from the containers is captured in
+the Pod's /var/log directory. If you know the name of the specific job instance,
+the logs command can extract that log. With a little help from grep and c
+ut the name of the job is extracted and passed to the logs command:
+
+export JOB_ID=$(kubectl describe jobs oneshot | grep -o 'Created pod: .*' | cut -f3- -d' ')
+
+echo $JOB_ID
+
+kubectl logs $JOB_ID
+
+The log will report 10 new keys were generated.
+Once you are done inspecting the Job, use the delete command to remove it:
+
+kubectl get pod <pod-name> -o yaml > pod-definition.yaml
+
+kubectl config set-context $(kubectl config current-context) --namespace=dev
+
+
+## COUNT NUMBER OF NS
+kubectl get ns --no-headers | wc -l
