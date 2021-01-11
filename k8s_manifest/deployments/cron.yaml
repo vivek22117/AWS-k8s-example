@@ -1,0 +1,19 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: cron-date
+spec:
+  schedule: "* * * * *"
+  jobTemplate:mini
+    spec:
+      template:
+        metadata:
+          labels:
+            name: cron-date
+            environment: dev
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: what-is-the-time
+            image: alpine:3.6
+            command: ["/bin/date"]
