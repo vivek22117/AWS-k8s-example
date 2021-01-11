@@ -56,4 +56,29 @@ kubectl expose po httpd --name=httpd --type=ClusterIP --port=80
 :set paste
 
 
+## CREATE CONFIG MAP
+kubectl create cm webapp --from-literal=APP_COLOR=darkblue
+kubectl create cm webapp --from-evn-file=data/config/game.txt
+
+## CREATE SECRET
+kubectl create secret generic webapp --from-literal=DB_USER=vivek \
+                                     --from-literal=DB_PWD=vivek
+
+TO CONVERT PLAIN TEXT TO BASE64
+echo -n 'vivek' | base64
+echo -n 'passwrod' | base64
+
+
+## DELETE LINES FORM VI EDITOR
+
+ONE LINE DELETE
+dd
+
+MULTI LINE DELETE
+100dd
+
+
+
+
+
 

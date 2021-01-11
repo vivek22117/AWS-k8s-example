@@ -3,10 +3,7 @@ kind: List
 metadata:
   resourceVersion: ""
   selfLink: ""
-items:
-- apiVersion: v1
-  kind: ConfigMap
-  data:
-    app.name: auth-service
-    aws.credentials: '"doubledigit"'
-    aws.profile: admin
+data:
+  app.name: auth-service
+  aws.credentials: '"doubledigit"'
+  aws.profile: admin
