@@ -101,3 +101,12 @@ kubectl run bux --image=busybox --rm -it --restart=Never -- wget -O- $PO_ID:80
 
 ## GET IP AND PORT IN ONE GO
 kubectl get pod nginx-1 -o jsonpath='{.status.podIP}:{.spec.containers[0].ports[0].containerPort}' -n ckad
+
+
+## Create a busybox pod that echoes 'hello world' and then exits
+show
+kubectl run busybox --image=busybox -it --restart=Never -- echo 'hello world'
+
+## Do the same, but have the pod deleted automatically when it's completed
+show
+kubectl run busybox --image=busybox -it --rm --restart=Never -- /bin/sh -c 'echo hello world'
