@@ -110,3 +110,24 @@ kubectl run busybox --image=busybox -it --restart=Never -- echo 'hello world'
 ## Do the same, but have the pod deleted automatically when it's completed
 show
 kubectl run busybox --image=busybox -it --rm --restart=Never -- /bin/sh -c 'echo hello world'
+
+
+## UPDATE THE IMAGE
+kubectl set image deploy nginx nginx=nginx:1.7.9
+
+## CHECK DEPLOY ROLLOUT
+kubectl rollout status deploy nginx
+kubectl rollout history deploy nginx
+kubectl get rs
+
+## UNDO THE DEPLOYMENT TO PREVIOUS VERSION
+kubectl rollout undo deploy nginx
+
+## UNDO DEPLOYMENT TO SPECIFIC VERSION
+kubectl rollout undo deploy nginx --to-revision=2
+
+## AUTOSCALE THE DEPLOYMENT BETWEEN 5 to 10 BASED ON CPU
+kubectl autoscale deploy nginx --min=5 --max=10 --cpu-percent=80
+
+## GET HORIZONTAL SCALER
+kubectl get hpa
