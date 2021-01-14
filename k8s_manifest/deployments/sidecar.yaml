@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sidecar
+  namespace: ckad
+spec:
+  restartPolicy: Never
+  volumes:
+  - name: shared-volume
+    emptyDir: {}
+  containers:
+  - name: app
+    image: busybox
+    command: ["/bin/sh"]
+    args: ["-c", "while true; do date >> /var/log/date.txt; sleep 5; done"]
+    volumeMounts:
+    - name: shared-volume
+      mountPath: /var/log
+  - name: log-collector
+    image: alpine
+    command: ["/bin/sh"] 
+    args: ["-c", "sleep 7; echo Hello World"]
+    imagePullPolicy: IfNotPresent
+    volumeMounts:
+    - name: shared-volume
+      mountPath: /var/log
