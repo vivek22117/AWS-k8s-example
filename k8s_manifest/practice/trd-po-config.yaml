@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: sec-nginx
+  name: sec-nginx
+spec:
+  volumes:
+  - name: config-vol
+    configMap:
+      name: cmvolume
+  containers:
+  - image: nginx
+    name: sec-nginx
+    volumeMounts:
+    - name: config-vol
+      mountPath: /etc/lala
+
