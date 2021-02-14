@@ -10,6 +10,7 @@ resource "aws_eks_node_group" "eks_private_ng" {
   ami_type        = var.ami_type
   disk_size       = var.disk_size
   instance_types  = var.instance_types
+  capacity_type  = "ON_DEMAND"
 
   scaling_config {
     desired_size = var.pvt_desired_size

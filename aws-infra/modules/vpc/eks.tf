@@ -4,7 +4,6 @@ resource "aws_cloudwatch_log_group" "dd_eks_lg" {
   tags              = merge(local.common_tags, map("Name", "${var.environment}-eks-lg"))
 }
 
-
 ###########################################
 #              EKS Cluster                #
 ###########################################
