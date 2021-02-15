@@ -18,10 +18,6 @@ resource "aws_eks_node_group" "eks_private_ng" {
     min_size     = var.pvt_min_size
   }
 
-//  tags = merge(local.common_tags, {
-//    Name = "private-${var.environment}}"
-//  })
-
   lifecycle {
     create_before_destroy = true
     ignore_changes        = [scaling_config.0.desired_size]
@@ -65,10 +61,6 @@ resource "aws_eks_node_group" "eks_public_ng" {
     create_before_destroy = true
     ignore_changes        = [scaling_config.0.desired_size]
   }
-
-//  tags = merge(local.common_tags, {
-//    Name = "public-${var.environment}}"
-//  })
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
   # Otherwise, EKS will not be able to properly delete EC2 Instances and Elastic Network Interfaces.
