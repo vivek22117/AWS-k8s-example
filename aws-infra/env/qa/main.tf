@@ -47,4 +47,5 @@ module "eks-vpc-dev" {
   enabled_log_types       = var.enabled_log_types
 
 
+  workers_role_arns = []
 }
