@@ -204,13 +204,13 @@ resource "aws_iam_role_policy_attachment" "ec2_read_only" {
   role       = aws_iam_role.dd_eks_nodes_role.name
 }
 
-resource "aws_iam_role_policy_attachment" "cluster_autoscaler" {
-  policy_arn = aws_iam_policy.cluster_autoscaler_policy.arn
+resource "aws_iam_role_policy_attachment" "cluster_autoscaling" {
+  policy_arn = aws_iam_policy.cluster_autoscaling_policy.arn
   role       = aws_iam_role.dd_eks_nodes_role.name
 }
 
-resource "aws_iam_policy" "cluster_autoscaler_policy" {
-  name        = "EKSClusterAutoScaler"
+resource "aws_iam_policy" "cluster_autoscaling_policy" {
+  name        = "EKSClusterAutoScalingPolicy"
   description = "Give the worker node running the Cluster Autoscaler access to required resources and actions"
   policy      = <<EOF
 {
