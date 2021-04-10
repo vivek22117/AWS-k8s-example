@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 
-echo "Install Javaa8"
+echo "Install Java8"
 sudo yum remove -y java
 sudo yum install -y java-1.8.0-openjdk
 
@@ -22,6 +22,7 @@ mv kubectl /usr/local/bin/kubectl
 
 curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
 mv /tmp/eksctl /usr/local/bin
+
 yum install docker -y
 systemctl enable docker
 systemctl start docker
@@ -70,5 +71,7 @@ EOF
 sudo systemctl daemon-reload
 sudo systemctl start node_exporter
 sudo systemctl enable node_exporter
+
+sleep 10
 
 echo "SUCCESS! Installation succeeded!"

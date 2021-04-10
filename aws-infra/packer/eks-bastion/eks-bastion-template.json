@@ -23,7 +23,7 @@
       "Project": "DoubleDigit-Solutions"
     }
   }],
-  "provisioners": [{
+  "provisioners": [
     {
       "type" : "file",
       "source" : "./telegraf.conf",
@@ -31,8 +31,9 @@
     },
     {
       "type" : "shell",
-      "script" : "./setup.sh",
-      "execute_command" : "sudo -E -S sh '{{ .Path }}'"
-    },
-  }]
+      "scripts" : ["./setup.sh"],
+      "execute_command" : "sudo -E -S sh '{{ .Path }}'",
+      "pause_before": "10s"
+    }
+  ]
 }
