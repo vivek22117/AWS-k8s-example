@@ -1,5 +1,5 @@
 ####################################################
-#        Dev EKS-VPC moudle configuration              #
+#        Dev EKS-VPC moudle configuration          #
 ####################################################
 module "eks-vpc-dev" {
   source = "../../modules/vpc"
