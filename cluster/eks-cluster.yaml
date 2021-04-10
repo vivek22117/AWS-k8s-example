@@ -4,6 +4,7 @@ kind: ClusterConfig
 metadata:
   name: dd-eks-cluster
   region: us-east-1
+  version: "1.18"
 
 vpc:
   id: "vpc-0dd338ecf29863c55"  # (optional, must match VPC ID used for each subnet below)

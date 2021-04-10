@@ -12,14 +12,14 @@ locals {
 
   # Add worker nodes role ARNs (could be from many worker groups) to the ConfigMap
   map_worker_roles = [
-  for role_arn in var.workers_role_arns : {
-    rolearn : role_arn
-    username : "system:node:{{EC2PrivateDNSName}}"
-    groups : [
-      "system:bootstrappers",
-      "system:nodes"
-    ]
-  }
+    for role_arn in var.workers_role_arns : {
+      rolearn : role_arn
+      username : "system:node:{{EC2PrivateDNSName}}"
+      groups : [
+        "system:bootstrappers",
+        "system:nodes"
+      ]
+    }
   ]
 
   map_worker_roles_yaml            = trimspace(yamlencode(local.map_worker_roles))
