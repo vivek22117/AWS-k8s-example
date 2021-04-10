@@ -1,0 +1,53 @@
+---
+
+resources:
+  - name: source-code
+    type: git
+    source:
+      uri: abc
+      branch: master
+  - name: articat
+
+jobs:
+  - name: compile
+    plan:
+      - get: source-code
+      - task: first-task
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: ubuntu
+              tag: 2.2
+          inputs:
+            - name: source-code
+          outputs:
+            - name: output-folder
+          run:
+            - path: ./input/script.sh
+
+        - put: s3-folder
+
+  - name: build
+    plan:
+      - get: source-code
+        passed: [compile]
+        trigger: true
+      - task: first-task
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: ubuntu
+              tag: 2.2
+          inputs:
+            - name: source-code
+          outputs:
+            - name: output-folder
+          run:
+            - path: ./input/script.sh
+
+            - put: s3-folder
+

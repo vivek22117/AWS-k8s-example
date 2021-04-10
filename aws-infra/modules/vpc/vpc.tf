@@ -28,7 +28,7 @@ resource "aws_internet_gateway" "vpc_igw" {
 
 ########################################################################
 # Route Table                                                          #
-## Usually unecessary to explicitly create a Route Table in Terraform  #
+## Usually unnecessary to explicitly create a Route Table in Terraform  #
 ## since AWS automatically creates and assigns a 'Main Route Table'    #
 ## whenever a VPC is created. However, in a Transit Gateway scenario,  #
 ## Route Tables are explicitly created so an extra route to the        #

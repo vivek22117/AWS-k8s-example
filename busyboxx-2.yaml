@@ -4,6 +4,7 @@ metadata:
   labels:
     run: busybox
   name: busybox
+  namespace: default
 spec:
   containers:
   - command:

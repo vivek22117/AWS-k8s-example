@@ -1,0 +1,20 @@
+
+
+fly targets
+
+fly --target ps login
+fly --target ps status
+fly --target ps execute --config task1.yml  //Executes individual task
+
+fly -t ps execute -c task.yml -i resources=./folder_abc
+
+fly --target ps set-pipeline --pipeline my-dummy --config pipeline.yml
+
+fly -t ps set-pipeline -c dummy.yml -p mod2-pipeline-name
+
+fly --target ps jobs --pipeline my-dummy
+
+fly -t ps trigger-job --job mod-pipeline/unit-test
+
+
+

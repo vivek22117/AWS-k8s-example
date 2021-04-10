@@ -12,6 +12,8 @@ resource "aws_eks_node_group" "eks_private_ng" {
   instance_types  = var.instance_types
   capacity_type  = "ON_DEMAND"
 
+  force_update_version = false
+
   scaling_config {
     desired_size = var.pvt_desired_size
     max_size     = var.pvt_max_size
@@ -46,16 +48,18 @@ resource "aws_eks_node_group" "eks_public_ng" {
   disk_size       = var.disk_size
   instance_types  = var.instance_types
 
+  force_update_version = false
+
   scaling_config {
     desired_size = var.public_desired_size
     max_size     = var.public_max_size
     min_size     = var.public_min_size
   }
 
-  //  labels = {
-  //    lifecycle = "OnDemand"
-  //    az        = "us-east-1a"
-  //  }
+    labels = {
+      lifecycle = "OnDemand"
+      az        = "us-east-1a"
+    }
 
   lifecycle {
     create_before_destroy = true

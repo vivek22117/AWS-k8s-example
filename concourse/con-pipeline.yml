@@ -1,0 +1,30 @@
+---
+
+resources:
+  - name: source-code
+    type: git
+    source:
+      uri: abc
+      branch: master
+
+jobs:
+  - name: compile
+    plan:
+      - get: source-code
+      - task: first-task
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: ubuntu
+              tag: 2.2
+          inputs:
+            - name: xyz
+          outputs:
+            - name: output-folder
+          run:
+            - path: find
+              args: [.]
+
+  - name: build
