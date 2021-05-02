@@ -10,7 +10,7 @@ resource "aws_eks_node_group" "eks_private_ng" {
   ami_type        = var.ami_type
   disk_size       = var.disk_size
   instance_types  = var.instance_types
-  capacity_type  = "ON_DEMAND"
+  capacity_type   = "ON_DEMAND"
 
   force_update_version = false
 
@@ -20,10 +20,17 @@ resource "aws_eks_node_group" "eks_private_ng" {
     min_size     = var.pvt_min_size
   }
 
+  remote_access {
+    ec2_ssh_key               = "bastion-eks-key"
+    source_security_group_ids = [aws_security_group.eks_nodes_sg.id]
+  }
+
   lifecycle {
     create_before_destroy = true
     ignore_changes        = [scaling_config.0.desired_size]
   }
+
+  tags = merge(local.common_tags, map("Name", "${var.environment}-pvt-node-gp"))
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
   # Otherwise, EKS will not be able to properly delete EC2 Instances and Elastic Network Interfaces.
@@ -56,15 +63,17 @@ resource "aws_eks_node_group" "eks_public_ng" {
     min_size     = var.public_min_size
   }
 
-    labels = {
-      lifecycle = "OnDemand"
-      az        = "us-east-1a"
-    }
+  remote_access {
+    ec2_ssh_key               = "bastion-eks-key"
+    source_security_group_ids = [aws_security_group.eks_nodes_sg.id]
+  }
 
   lifecycle {
     create_before_destroy = true
     ignore_changes        = [scaling_config.0.desired_size]
   }
+
+  tags = merge(local.common_tags, map("Name", "${var.environment}-pub-node-gp"))
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
   # Otherwise, EKS will not be able to properly delete EC2 Instances and Elastic Network Interfaces.

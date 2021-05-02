@@ -1,5 +1,5 @@
 data "aws_eks_cluster_auth" "cluster_auth" {
-  name = var.cluster_name
+  name = aws_eks_cluster.doubledigit_eks.id
 }
 
 
