@@ -96,7 +96,7 @@ variable "public_key" {
 ######################################################
 variable "team" {
   type        = string
-  description = "Owner team for this applcation infrastructure"
+  description = "Owner team for this application infrastructure"
 }
 
 variable "owner" {
@@ -106,12 +106,12 @@ variable "owner" {
 
 variable "environment" {
   type        = string
-  description = "Environmet to be used"
+  description = "Environment to be used"
 }
 
 variable "isMonitoring" {
   type        = bool
-  description = "Monitiroing is enabled or disabled for the resources creating"
+  description = "Monitoring is enabled or disabled for the resources creating"
 }
 
 

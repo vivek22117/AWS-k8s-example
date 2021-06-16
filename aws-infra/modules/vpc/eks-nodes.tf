@@ -54,6 +54,7 @@ resource "aws_eks_node_group" "eks_public_ng" {
   ami_type        = var.ami_type
   disk_size       = var.disk_size
   instance_types  = var.instance_types
+  capacity_type   = "ON_DEMAND"
 
   force_update_version = false
 
