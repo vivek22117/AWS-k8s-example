@@ -53,6 +53,12 @@ resource "aws_subnet" "public" {
     "kubernetes.io/cluster/${var.cluster_name}" = "shared"
     "kubernetes.io/role/elb"                    = "1"
   })
+
+  lifecycle {
+    ignore_changes = [
+      tags
+    ]
+  }
 }
 
 
@@ -73,6 +79,12 @@ resource "aws_subnet" "private" {
     "kubernetes.io/cluster/${var.cluster_name}" = "shared"
     "kubernetes.io/role/internal-elb"           = "1"
   })
+
+  lifecycle {
+    ignore_changes = [
+      tags
+    ]
+  }
 }
 
 
@@ -91,6 +103,12 @@ resource "aws_subnet" "db_subnet" {
   tags = merge(local.common_tags, {
     "Name" = "eks-db-${var.environment}-${element(keys(var.db_azs_with_cidr), count.index)}"
   })
+
+  lifecycle {
+    ignore_changes = [
+      tags
+    ]
+  }
 }
 
 resource "aws_db_subnet_group" "database_subnet_gp" {
@@ -183,9 +201,9 @@ resource "aws_route_table" "db_rt" {
 resource "aws_route" "private_ng_route" {
   count = var.enable_nat_gateway == "true" ? length(var.db_azs_with_cidr) : 0
 
-  route_table_id         = aws_route_table.db_rt.*.id[count.index]
+  route_table_id         = element(aws_route_table.db_rt.*.id, count.index)
   destination_cidr_block = "0.0.0.0/0"
-  nat_gateway_id         = aws_nat_gateway.nat_gateway.*.id[0]
+  nat_gateway_id         = element(aws_nat_gateway.nat_gateway.*.id, 0)
 }
 
 resource "aws_route_table_association" "db_subnet_association" {
