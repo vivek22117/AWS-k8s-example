@@ -22,7 +22,10 @@ resource "aws_internet_gateway" "vpc_igw" {
   vpc_id = aws_vpc.vpc.id
 
   tags = merge(local.common_tags, {
-    Name = "eks-igw-${var.environment}"
+    Name = "eks-igw-${var.environment}",
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
+    "k8s.io/cluster-autoscaler/${var.cluster_name}" = "true",
+    "k8s.io/cluster-autoscaler/enabled" =  "true"
   })
 }
 
