@@ -41,6 +41,35 @@
                 "iam:ListUsers"
             ],
             "Resource": "*"
+        },
+        {
+          "Sid": "SessionManagerStartSession",
+          "Effect": "Allow",
+          "Action": "ssm:StartSession",
+          "Resource": [
+            "arn:aws:ec2:*:*:instance/*",
+            "arn:aws:ssm:*::document/AWS-StartPortForwardingSession"
+          ]
+          "Condition": {
+            "StringLike": {
+              "ssm:resourceTag/ssm-session": "enabled"
+            }
+          }
+        },
+        {
+          "Sid": "SessionManagerPortForward",
+          "Effect": "Allow",
+          "Action": "ssm:StartSession",
+          "Resource": "arn:aws:ssm:*::document/AWS-StartPortForwardingSession"
+        },
+        {
+          "Sid": "SessionManagerTerminateSession",
+          "Effect": "Allow",
+          "Action": [
+            "ssm:TerminateSession",
+            "ssm:ResumeSession"
+          ],
+          "Resource": "arn:aws:ssm:*:*:session/${aws:username}-*"
         }
     ]
 }

@@ -25,11 +25,6 @@
   }],
   "provisioners": [
     {
-      "type" : "file",
-      "source" : "./telegraf.conf",
-      "destination" : "/tmp/telegraf.conf"
-    },
-    {
       "type" : "shell",
       "scripts" : ["./setup.sh"],
       "execute_command" : "sudo -E -S sh '{{ .Path }}'",
