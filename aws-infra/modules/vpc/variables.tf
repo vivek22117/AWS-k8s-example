@@ -218,14 +218,14 @@ variable "log_retention" {
 
 variable "enabled_log_types" {
   type        = list(string)
-  description = "Amazon EKS control plane logging provides audit and diagnostic logs directly from the Amazon EKS control plane to CloudWatch Logs"
+  description = "Amazon EKS control plane logging provides audit and diagnostic logs directly from the Amazon EKS control plane to CloudWatch Logs, valid values 'api', 'audit', 'authenticator', 'controllerManager', 'scheduler'"
+  default = ["api"]
 }
 
 variable "cluster_version" {
   type        = string
   description = "Desired Kubernetes master version."
 }
-
 
 #####================EKS ConfigMap Variables======================#####
 variable "enabled" {
@@ -304,3 +304,4 @@ variable "workers_role_arns" {
   type        = list(string)
   description = "List of Role ARNs of the worker nodes"
 }
+
