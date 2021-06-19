@@ -11,21 +11,34 @@ resource "aws_key_pair" "bastion_key" {
 #   Bastion host launch template and act as Jump Instance        #
 ##################################################################
 resource "aws_launch_template" "eks_bastion_lt" {
+  name_prefix = "${var.resource_name_prefix}${var.environment}"
+
+  image_id               = data.aws_ami.bastion.id
+  key_name               = aws_key_pair.bastion_key.key_name
+  instance_type          = var.bastion_instance_type
+  instance_initiated_shutdown_behavior = "terminate"
+
   iam_instance_profile {
     name = aws_iam_instance_profile.bastion_host_profile.name
   }
-  image_id               = data.aws_ami.bastion.id
-  name                   = "eks-bastion-host"
-  vpc_security_group_ids = [aws_security_group.bastion_host_sg.id]
-  key_name               = aws_key_pair.bastion_key.key_name
-  instance_type          = var.bastion_instance_type
+
+  network_interfaces {
+    device_index                = 0
+    associate_public_ip_address = false
+    security_groups             = [aws_security_group.bastion_host_sg.id]
+    delete_on_termination       = true
+  }
 
   block_device_mappings {
     device_name = "/dev/xvda"
+
     ebs {
-      volume_size = 30
+      volume_size           = var.volume_size
+      volume_type           = "gp2"
+      delete_on_termination = true
     }
   }
+
   lifecycle {
     create_before_destroy = true
   }
@@ -41,12 +54,15 @@ resource "aws_launch_template" "eks_bastion_lt" {
 #         Bastion host ASG                      #
 #################################################
 resource "aws_autoscaling_group" "bastion_asg" {
-  name = "eks-bastion-asg"
+  name_prefix         = "eks-bastion-asg-${var.environment}"
 
-  vpc_zone_identifier = aws_subnet.public.*.id
-  max_size            = 2
-  min_size            = 1
-  desired_capacity    = 1
+  vpc_zone_identifier = data.terraform_remote_state.vpc.outputs.public_subnets
+  termination_policies      = var.termination_policies
+  max_size                  = var.eks_bastion_asg_max_size
+  min_size                  = var.eks_bastion_asg_min_size
+  desired_capacity          = var.eks_bastion_asg_desired_capacity
+
+  default_cooldown = var.default_cooldown
 
   mixed_instances_policy {
     instances_distribution {

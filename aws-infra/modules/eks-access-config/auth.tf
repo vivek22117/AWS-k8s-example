@@ -1,6 +1,6 @@
 
 locals {
-  certificate_authority_data_list          = coalescelist(aws_eks_cluster.doubledigit_eks.*.certificate_authority, [[{ data : "" }]])
+  certificate_authority_data_list          = coalescelist(data.terraform_remote_state.eks-vpc.outputs.eks_cluster_certificate_authority, [[{ data : "" }]])
   certificate_authority_data_list_internal = local.certificate_authority_data_list[0]
   certificate_authority_data_map           = local.certificate_authority_data_list_internal[0]
   certificate_authority_data               = local.certificate_authority_data_map["data"]
@@ -8,7 +8,7 @@ locals {
   configmap_auth_template_file = var.configmap_auth_template_file == "" ? join("/", [path.module, "data-script/configmap-auth.yaml.tpl"]) : var.configmap_auth_template_file
   configmap_auth_file          = var.configmap_auth_file == "" ? join("/", [path.module, "data-script/configmap-auth.yaml"]) : var.configmap_auth_file
 
-  cluster_name = join("", aws_eks_cluster.doubledigit_eks.*.id)
+  cluster_name = join("", data.terraform_remote_state.eks-vpc.outputs.eks_cluster_id)
 
   # Add worker nodes role ARNs (could be from many worker groups) to the ConfigMap
   map_worker_roles = [
@@ -50,7 +50,7 @@ resource "null_resource" "apply_configmap_auth" {
   count = var.enabled && var.apply_config_map_aws_auth ? 1 : 0
 
   triggers = {
-    cluster_updated                     = join("", aws_eks_cluster.doubledigit_eks.*.id)
+    cluster_updated                     = join("", data.terraform_remote_state.eks-vpc.outputs.eks_cluster_id)
     worker_roles_updated                = local.map_worker_roles_yaml
     additional_roles_updated            = local.map_additional_iam_roles_yaml
     additional_users_updated            = local.map_additional_iam_users_yaml
@@ -59,7 +59,7 @@ resource "null_resource" "apply_configmap_auth" {
     configmap_auth_file_id_changed      = join("", local_file.configmap_auth.*.id)
   }
 
-  depends_on = [aws_eks_cluster.doubledigit_eks, local_file.configmap_auth]
+  depends_on = [local_file.configmap_auth]
 
   provisioner "local-exec" {
     interpreter = [var.local_exec_interpreter, "-c"]
