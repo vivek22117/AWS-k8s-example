@@ -76,6 +76,17 @@ variable "spot_price" {
   description = "EC2 Spot price"
 }
 
+variable "ec2_ssh_key" {
+  type = string
+  description = "Name of the SSH key pair"
+}
+
+variable "launch_template" {
+  type        = map(string)
+  description = "Configuration block with Launch Template settings. `name`, `id` and `version` parameters are available."
+  default     = {}
+}
+
 #########################################################
 # Default variables for backend and SSH key for Bastion #
 #########################################################
