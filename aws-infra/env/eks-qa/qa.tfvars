@@ -7,10 +7,6 @@ support_dns        = "true"
 enable_nat_gateway = true
 db_subnet_gp       = "eks-dbsubnet-group"
 
-spot_allocation_st = "lowest-price"
-spot_price         = "0.007600"
-
-
 private_azs_with_cidr = {
   us-east-1a = "10.11.0.0/24"
   us-east-1b = "10.11.2.0/24"
@@ -32,7 +28,6 @@ db_azs_with_cidr = {
 
 team                  = "DoubleDigitTeam"
 owner                 = "Vivek"
-bastion_instance_type = "t3.small"
 isMonitoring          = true
 
 cluster_version         = "1.17"

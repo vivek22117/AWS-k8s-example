@@ -96,9 +96,7 @@ resource "aws_network_acl" "public_nacl" {
   }
 
   tags = merge(local.common_tags, {
-    "Name"                                        = "eks-public-${var.environment}-NACL"
-    "alpha.eksctl.io/cluster-name"                = var.cluster_name
-    "eksctl.cluster.k8s.io/v1alpha1/cluster-name" = var.cluster_name
+    "Name" = "eks-public-${var.environment}-NACL"
   })
 }
 
@@ -202,8 +200,6 @@ resource "aws_network_acl" "private_nacl" {
   }
 
   tags = merge(local.common_tags, {
-    "Name"                                        = "eks-private-${var.environment}-NACL"
-    "alpha.eksctl.io/cluster-name"                = var.cluster_name
-    "eksctl.cluster.k8s.io/v1alpha1/cluster-name" = var.cluster_name
+    "Name" = "eks-private-${var.environment}-NACL"
   })
 }

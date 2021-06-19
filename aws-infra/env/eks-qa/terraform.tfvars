@@ -1,4 +1,4 @@
-profile        = "admin"
+profile        = "qa-admin"
 default_region = "us-east-1"
 
 cidr_block         = "10.11.0.0/20"
@@ -7,10 +7,7 @@ enable_dns         = "true"
 support_dns        = "true"
 enable_nat_gateway = true
 db_subnet_gp       = "eks-dbsubnet-group"
-
-spot_allocation_st = "lowest-price"
-spot_price         = "0.007600"
-
+ec2_ssh_key = "bastion-key"
 
 private_azs_with_cidr = {
   us-east-1a = "10.11.0.0/24"
@@ -33,7 +30,6 @@ db_azs_with_cidr = {
 
 team                  = "DoubleDigitTeam"
 owner                 = "Vivek"
-bastion_instance_type = "t3.small"
 isMonitoring          = true
 
 cluster_version         = "1.17"
@@ -47,10 +43,10 @@ ami_type                = "AL2_x86_64"
 disk_size               = 30
 instance_types          = ["t3.medium"]
 pvt_desired_size        = 1
-pvt_max_size            = 1
+pvt_max_size            = 2
 pvt_min_size            = 1
 public_desired_size     = 1
-public_max_size         = 1
+public_max_size         = 2
 public_min_size         = 1
 
 log_retention     = 3

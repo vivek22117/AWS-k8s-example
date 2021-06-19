@@ -61,23 +61,8 @@ variable "enable_nat_gateway" {
   description = "want to create nat-gateway or not"
 }
 
-variable "bastion_instance_type" {
-  type        = string
-  description = "Instance type for Bastion Host"
-}
-
-variable "spot_allocation_st" {
-  type        = string
-  description = "How to allocate capacity across the Spot pools. Valid values: lowest-price, capacity-optimized."
-}
-
-variable "spot_price" {
-  type        = string
-  description = "EC2 Spot price"
-}
-
 variable "ec2_ssh_key" {
-  type = string
+  type        = string
   description = "Name of the SSH key pair"
 }
 
@@ -94,12 +79,6 @@ variable "s3_bucket_prefix" {
   type        = string
   default     = "doubledigit-tfstate"
   description = "Prefix for s3 bucket"
-}
-
-variable "public_key" {
-  type        = string
-  description = "key pair value"
-  default     = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDV3fznjm92/s10goG0YotNIjq66CTDyf5a6wVVQUDYIF4OziH9G81NNc9sQiTlfNFy8RO4kSB0n5+w9nt90gs7nSZoBAATK6T0YNHll/A6ISUv4hgwooa6XUYxFgg+ceZ8Mvxc36wx78wTieVc7RTbx74Wr8AtavSJMC8wVb8QkUGMpumH7TNPP356MYEEgYciRLE8sLnkRYOvVekL3iU8p1tS5Pny5mqR1hinbQoE7WNuDsBxgV6Xn9kRQ9Rn5seIyY55tc1HPd2fwkafidWVX3hUD8RwOfSYvAwPc7AmVLCbUCktSZ8S1FEV9dSVncd8ji1tguoHh/OquXzNckqJ vivek@LAPTOP-FLDAPLLM"
 }
 
 ######################################################
@@ -123,21 +102,6 @@ variable "environment" {
 variable "isMonitoring" {
   type        = bool
   description = "Monitoring is enabled or disabled for the resources creating"
-}
-
-
-#####=============ASG Standards Tags===============#####
-variable "custom_tags" {
-  description = "Custom tags to set on the Instances in the ASG"
-  type        = map(string)
-  default = {
-    owner      = "vivek"
-    team       = "doubledigit-solutions"
-    tool       = "Terraform"
-    monitoring = "true"
-    Name       = "Bastion-Host"
-    Project    = "DoubleDigit-Solutions"
-  }
 }
 
 #####=============Local variables===============#####
@@ -230,7 +194,7 @@ variable "log_retention" {
 variable "enabled_log_types" {
   type        = list(string)
   description = "Amazon EKS control plane logging provides audit and diagnostic logs directly from the Amazon EKS control plane to CloudWatch Logs, valid values 'api', 'audit', 'authenticator', 'controllerManager', 'scheduler'"
-  default = ["api"]
+  default     = ["api"]
 }
 
 variable "cluster_version" {
@@ -238,81 +202,4 @@ variable "cluster_version" {
   description = "Desired Kubernetes master version."
 }
 
-#####================EKS ConfigMap Variables======================#####
-variable "enabled" {
-  type        = bool
-  description = "Whether to create the resources. Set to `false` to prevent the module from creating any resources"
-  default     = true
-}
-
-variable "local_exec_interpreter" {
-  type        = string
-  default     = "/bin/bash"
-  description = "shell to use for local exec"
-}
-
-variable "apply_config_map_aws_auth" {
-  type        = bool
-  default     = true
-  description = "Whether to generate local files from `kubeconfig` and `config-map-aws-auth` templates and perform `kubectl apply` to apply the ConfigMap to allow worker nodes to join the EKS cluster"
-}
-
-variable "map_additional_aws_accounts" {
-  description = "Additional AWS account numbers to add to `config-map-aws-auth` ConfigMap"
-  type        = list(string)
-  default     = []
-}
-
-variable "map_additional_iam_roles" {
-  description = "Additional IAM roles to add to `config-map-aws-auth` ConfigMap"
-
-  type = list(object({
-    rolearn  = string
-    username = string
-    groups   = list(string)
-  }))
-
-  default = []
-}
-
-variable "map_additional_iam_users" {
-  description = "Additional IAM users to add to `config-map-aws-auth` ConfigMap"
-
-  type = list(object({
-    userarn  = string
-    username = string
-    groups   = list(string)
-  }))
-
-  default = []
-}
-
-variable "kubeconfig_path" {
-  type        = string
-  default     = "~/.kube/config"
-  description = "The path to `kubeconfig` file"
-}
-
-variable "configmap_auth_template_file" {
-  type        = string
-  default     = ""
-  description = "Path to `config_auth_template_file`"
-}
-
-variable "configmap_auth_file" {
-  type        = string
-  default     = ""
-  description = "Path to `configmap_auth_file`"
-}
-
-variable "aws_eks_update_kubeconfig_additional_arguments" {
-  type        = string
-  default     = ""
-  description = "Additional arguments for `aws eks update-kubeconfig` command, e.g. `--role-arn xxxxxxxxx`. For more info, see https://docs.aws.amazon.com/cli/latest/reference/eks/update-kubeconfig.html"
-}
-
-variable "workers_role_arns" {
-  type        = list(string)
-  description = "List of Role ARNs of the worker nodes"
-}
 

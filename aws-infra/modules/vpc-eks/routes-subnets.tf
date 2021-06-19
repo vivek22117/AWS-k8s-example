@@ -49,11 +49,11 @@ resource "aws_subnet" "public" {
   map_public_ip_on_launch = true
 
   tags = merge(local.common_tags, {
-    Name                                        = "eks-public-${var.environment}-${element(keys(var.public_azs_with_cidr), count.index)}"
-    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
-    "kubernetes.io/role/elb"                    = "1",
+    Name                                            = "eks-public-${var.environment}-${element(keys(var.public_azs_with_cidr), count.index)}"
+    "kubernetes.io/cluster/${var.cluster_name}"     = "shared"
+    "kubernetes.io/role/elb"                        = "1",
     "k8s.io/cluster-autoscaler/${var.cluster_name}" = "true",
-    "k8s.io/cluster-autoscaler/enabled" =  "true"
+    "k8s.io/cluster-autoscaler/enabled"             = "true"
   })
 
   lifecycle {
@@ -77,11 +77,11 @@ resource "aws_subnet" "private" {
   map_public_ip_on_launch = false
 
   tags = merge(local.common_tags, {
-    Name                                        = "eks-private-${var.environment}-${element(keys(var.private_azs_with_cidr), count.index)}"
-    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
-    "kubernetes.io/role/internal-elb"           = "1"
+    Name                                            = "eks-private-${var.environment}-${element(keys(var.private_azs_with_cidr), count.index)}"
+    "kubernetes.io/cluster/${var.cluster_name}"     = "shared"
+    "kubernetes.io/role/internal-elb"               = "1"
     "k8s.io/cluster-autoscaler/${var.cluster_name}" = "true",
-    "k8s.io/cluster-autoscaler/enabled" =  "true"
+    "k8s.io/cluster-autoscaler/enabled"             = "true"
   })
 
   lifecycle {

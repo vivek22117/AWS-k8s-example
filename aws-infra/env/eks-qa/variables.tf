@@ -61,19 +61,15 @@ variable "enable_nat_gateway" {
   description = "want to create nat-gateway or not"
 }
 
-variable "bastion_instance_type" {
-  type        = string
-  description = "Instance type for Bastion Host"
+variable "ec2_ssh_key" {
+  type = string
+  description = "Name of the SSH key pair"
 }
 
-variable "spot_allocation_st" {
-  type        = string
-  description = "How to allocate capacity across the Spot pools. Valid values: lowest-price, capacity-optimized."
-}
-
-variable "spot_price" {
-  type        = string
-  description = "EC2 Spot price"
+variable "launch_template" {
+  type        = map(string)
+  description = "Configuration block with Launch Template settings. `name`, `id` and `version` parameters are available."
+  default     = {}
 }
 
 #########################################################
@@ -83,12 +79,6 @@ variable "s3_bucket_prefix" {
   type        = string
   default     = "doubledigit-tfstate"
   description = "Prefix for s3 bucket"
-}
-
-variable "public_key" {
-  type        = string
-  description = "key pair value"
-  default     = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDV3fznjm92/s10goG0YotNIjq66CTDyf5a6wVVQUDYIF4OziH9G81NNc9sQiTlfNFy8RO4kSB0n5+w9nt90gs7nSZoBAATK6T0YNHll/A6ISUv4hgwooa6XUYxFgg+ceZ8Mvxc36wx78wTieVc7RTbx74Wr8AtavSJMC8wVb8QkUGMpumH7TNPP356MYEEgYciRLE8sLnkRYOvVekL3iU8p1tS5Pny5mqR1hinbQoE7WNuDsBxgV6Xn9kRQ9Rn5seIyY55tc1HPd2fwkafidWVX3hUD8RwOfSYvAwPc7AmVLCbUCktSZ8S1FEV9dSVncd8ji1tguoHh/OquXzNckqJ vivek@LAPTOP-FLDAPLLM"
 }
 
 ######################################################
@@ -106,26 +96,12 @@ variable "owner" {
 
 variable "environment" {
   type        = string
-  description = "Environment to be configured 'dev', 'qa', 'prod'"
+  description = "Environment to be used"
 }
 
 variable "isMonitoring" {
   type        = bool
   description = "Monitoring is enabled or disabled for the resources creating"
-}
-
-#####=============ASG Standards Tags===============#####
-variable "custom_tags" {
-  description = "Custom tags to set on the Instances in the ASG"
-  type        = map(string)
-  default = {
-    owner      = "vivek"
-    team       = "doubledigit-solutions"
-    tool       = "Terraform"
-    monitoring = "true"
-    Name       = "Bastion-Host"
-    Project    = "DoubleDigit-Solutions"
-  }
 }
 
 #####=============Local variables===============#####
@@ -217,7 +193,8 @@ variable "log_retention" {
 
 variable "enabled_log_types" {
   type        = list(string)
-  description = "Amazon EKS control plane logging provides audit and diagnostic logs directly from the Amazon EKS control plane to CloudWatch Logs"
+  description = "Amazon EKS control plane logging provides audit and diagnostic logs directly from the Amazon EKS control plane to CloudWatch Logs, valid values 'api', 'audit', 'authenticator', 'controllerManager', 'scheduler'"
+  default = ["api"]
 }
 
 variable "cluster_version" {
