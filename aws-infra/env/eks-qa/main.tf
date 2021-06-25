@@ -1,8 +1,8 @@
 ####################################################
-#        Dev EKS-VPC moudle configuration          #
+#        Dev EKS-VPC module configuration          #
 ####################################################
 module "eks-vpc-dev" {
-  source = "../../modules/vpc"
+  source = "../../modules/vpc-eks"
 
   profile        = var.profile
   environment    = var.environment
@@ -22,9 +22,8 @@ module "eks-vpc-dev" {
   owner        = var.owner
   isMonitoring = var.isMonitoring
 
-  bastion_instance_type = var.bastion_instance_type
-  spot_allocation_st    = var.spot_allocation_st
-  spot_price            = var.spot_price
+  ec2_ssh_key = var.ec2_ssh_key
+  launch_template = var.launch_template
 
   cluster_name    = var.cluster_name
   cluster_version = var.cluster_version
@@ -42,10 +41,8 @@ module "eks-vpc-dev" {
   pvt_min_size            = var.pvt_min_size
   public_desired_size     = var.public_desired_size
   public_max_size         = var.public_max_size
-  public_min_size         = var.public_max_size
+  public_min_size         = var.public_min_size
   log_retention           = var.log_retention
   enabled_log_types       = var.enabled_log_types
 
-
-  workers_role_arns = []
 }

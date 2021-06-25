@@ -224,3 +224,83 @@ variable "cluster_version" {
   type        = string
   description = "Desired Kubernetes master version."
 }
+
+
+
+#####================EKS ConfigMap Variables======================#####
+variable "enabled" {
+  type        = bool
+  description = "Whether to create the resources. Set to `false` to prevent the module from creating any resources"
+  default     = true
+}
+
+variable "local_exec_interpreter" {
+  type        = string
+  default     = "/bin/bash"
+  description = "shell to use for local exec"
+}
+
+variable "apply_config_map_aws_auth" {
+  type        = bool
+  default     = true
+  description = "Whether to generate local files from `kubeconfig` and `config-map-aws-auth` templates and perform `kubectl apply` to apply the ConfigMap to allow worker nodes to join the EKS cluster"
+}
+
+variable "map_additional_aws_accounts" {
+  description = "Additional AWS account numbers to add to `config-map-aws-auth` ConfigMap"
+  type        = list(string)
+  default     = []
+}
+
+variable "map_additional_iam_roles" {
+  description = "Additional IAM roles to add to `config-map-aws-auth` ConfigMap"
+
+  type = list(object({
+    rolearn  = string
+    username = string
+    groups   = list(string)
+  }))
+
+  default = []
+}
+
+variable "map_additional_iam_users" {
+  description = "Additional IAM users to add to `config-map-aws-auth` ConfigMap"
+
+  type = list(object({
+    userarn  = string
+    username = string
+    groups   = list(string)
+  }))
+
+  default = []
+}
+
+variable "kubeconfig_path" {
+  type        = string
+  default     = "~/.kube/config"
+  description = "The path to `kubeconfig` file"
+}
+
+variable "configmap_auth_template_file" {
+  type        = string
+  default     = ""
+  description = "Path to `config_auth_template_file`"
+}
+
+variable "configmap_auth_file" {
+  type        = string
+  default     = ""
+  description = "Path to `configmap_auth_file`"
+}
+
+variable "aws_eks_update_kubeconfig_additional_arguments" {
+  type        = string
+  default     = ""
+  description = "Additional arguments for `aws eks update-kubeconfig` command, e.g. `--role-arn xxxxxxxxx`. For more info, see https://docs.aws.amazon.com/cli/latest/reference/eks/update-kubeconfig.html"
+}
+
+variable "workers_role_arns" {
+  type        = list(string)
+  description = "List of Role ARNs of the worker nodes"
+}
