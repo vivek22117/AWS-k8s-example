@@ -2,7 +2,7 @@
 #       Bastion Host Security Group             #
 #################################################
 resource "aws_security_group" "bastion_host_sg" {
-  name = "bastion-sg-${aws_vpc.vpc.id}"
+  name = "eks-bastion-sg-${aws_vpc.vpc.id}"
 
   description = "Allow SSH from owner IP"
   vpc_id      = aws_vpc.vpc.id
@@ -35,7 +35,7 @@ resource "aws_security_group" "bastion_host_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = merge(local.common_tags, map("Name", "${var.environment}-bastion-sg"))
+  tags = merge(local.common_tags, map("Name", "eks-${var.environment}-bastion-sg"))
 }
 
 

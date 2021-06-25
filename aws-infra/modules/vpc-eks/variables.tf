@@ -61,6 +61,21 @@ variable "enable_nat_gateway" {
   description = "want to create nat-gateway or not"
 }
 
+variable "bastion_instance_type" {
+  type        = string
+  description = "Instance type for Bastion Host"
+}
+
+variable "spot_allocation_st" {
+  type        = string
+  description = "How to allocate capacity across the Spot pools. Valid values: lowest-price, capacity-optimized."
+}
+
+variable "spot_price" {
+  type        = string
+  description = "EC2 Spot price"
+}
+
 variable "ec2_ssh_key" {
   type        = string
   description = "Name of the SSH key pair"
